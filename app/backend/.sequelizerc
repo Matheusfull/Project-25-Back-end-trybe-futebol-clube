@@ -1,8 +1,17 @@
 const path = require('path');
 
 module.exports = {
+  // diferencial as 2 primeiras.
   'config': path.resolve(__dirname,'build','database','config', 'database.js'),
   'models-path': path.resolve(__dirname,'build','database','models'),
   'seeders-path': path.resolve(__dirname,'src','database', 'seeders'),
   'migrations-path': path.resolve(__dirname,'src','database', 'migrations'),
 };
+
+/*
+Este arquivo vai dizer onde estão as pastas de configuração.
+Teremos duas diferenças:
+1 - Ele vai buscar na pasta build o config
+2 - E buscando na build a model
+Isso porque o ts não reconhece o sequelize cli e não trabalha o uso de model e config, então jogamos na transpilação.
+*/
