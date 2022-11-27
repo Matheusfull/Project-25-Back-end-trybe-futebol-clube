@@ -14,7 +14,7 @@ const { app } = new App();
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
+describe('Testes de User e Login', () => {
   /**
    * Exemplo do uso de stubs com tipos
    */
@@ -41,7 +41,13 @@ describe('Seu teste', () => {
   //   expect(...)
   // });
 
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+  it('Teste de acesso com dados válidos no front-end', async () => {
+    const response = await chai.request(app).post('/login').send(
+      {
+        email: 'test@test.com', password : '12345',
+      },
+    )
+
+    expect(response.status).to.be.equal(200);
   });
 });
