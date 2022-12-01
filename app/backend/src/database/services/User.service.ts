@@ -1,16 +1,22 @@
+import * as Bcrypt from 'bcryptjs';
 import TokenManager from '../helpers/TokenManager';
 import UserModel from '../models/UserModel';
 
-interface IRequest {
+/* interface IRequest {
   email: string;
-  password: string;
-}
+  password?: string;
+} */
 
 export default class UserService {
-  public makeLogin = async ({ email, password }: IRequest) => {
-    const user = await UserModel.findOne({ where: { email, password } });
+  constructor(private model = UserModel) { }
+  makeLogin = async (email: string, password: string) => {
+    const user = await this.model.findOne({ where: { email } });
 
-    if (!user) throw new Error('Invalid fields');
+    if (!user) return { message: 'Invalid fields' };
+
+    if (!Bcrypt.compareSync(password, user.password)) {
+      return { message: 'DATA_NOTFOUND' };
+    }
 
     const token = TokenManager.makeToken(user);
     return token;

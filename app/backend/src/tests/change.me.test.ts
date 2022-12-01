@@ -61,10 +61,11 @@ describe('Testes de User e Login', () => {
     )
 
     expect(response.status).to.be.equal(400);
+    expect(response.body).to.be.equal('message : All fields must be filled')
   });
 });
 
-describe('testes de times', () => {
+/* describe('testes de times', () => {
   it('Trazendo todos os times', async () => {
     const response = await chai.request(app).post('/teams').send({
       id : 1
@@ -141,4 +142,4 @@ describe('testes de times', () => {
     expect(response).to.be.equal(times[0]);
   })
 
-})
+}) */
