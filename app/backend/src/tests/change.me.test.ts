@@ -44,7 +44,7 @@ describe('Testes de User e Login', () => {
   it('Token retornado com dados válidos', async () => {
     const response = await chai.request(app).post('/login').send(
       {
-        email: 'admin@admin.com', password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW',
+        email: 'admin@admin.com', password: 'secret_admin',
       },
     )
 
@@ -56,20 +56,52 @@ describe('Testes de User e Login', () => {
   it('Acesso negado, caso não haja email', async () => {
     const response = await chai.request(app).post('/login').send(
       {
-        password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW',
+        password: 'secret_admin',
       },
     )
 
     expect(response.status).to.be.equal(400);
-    expect(response.body).to.be.equal('message : All fields must be filled')
+    expect(response.body).to.deep.equal({message : 'All fields must be filled'})
   });
+
+  it('Acesso negado, caso não haja senha', async () => {
+    const response = await chai.request(app).post('/login').send(
+      {
+        email: 'admin@admin.com',
+      },
+    )
+
+    expect(response.status).to.be.equal(400);
+    expect(response.body).to.deep.equal({message : 'All fields must be filled'})
+  });
+
+  it('Acesso negado, caso email esteja errado', async () => {
+    const response = await chai.request(app).post('/login').send(
+      {
+        email: 'erro@admin.com', password: 'secret_admin',
+      },
+    )
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.deep.equal({message : 'Incorrect email or password'})
+  });
+
+  it('Acesso negado, caso password esteja errado', async () => {
+    const response = await chai.request(app).post('/login').send(
+      {
+        email: 'admin@admin.com', password: 'erro',
+      },
+    )
+
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.deep.equal({message : 'Incorrect email or password'})
+  });
+
 });
 
-/* describe('testes de times', () => {
+describe('testes de Times', () => {
   it('Trazendo todos os times', async () => {
-    const response = await chai.request(app).post('/teams').send({
-      id : 1
-    })
+    const response = await chai.request(app).get('/teams')
 
     const times = [
       {
@@ -138,8 +170,8 @@ describe('Testes de User e Login', () => {
       }
     ]
 
-    // expect(response.status).to.be.equal(200);
-    expect(response).to.be.equal(times[0]);
+    expect(response.status).to.be.equal(200);
+    // expect(response).to.deep.equal(times);
   })
 
-}) */
+})
