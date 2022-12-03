@@ -42,11 +42,11 @@ Matches.init({
   // ... Outras configs
   underscored: true,
   sequelize: db,
-  modelName: 'users',
+  modelName: 'matches',
   timestamps: false,
 });
 
-Matches.belongsTo(TeamsModel, { foreignKey: 'home_teams', as: 'teamsHome' });
-Matches.belongsTo(TeamsModel, { foreignKey: 'away_teams', as: 'teamsAway' });
+Matches.belongsTo(TeamsModel, { foreignKey: 'home_team', as: 'teamsHome' });
+Matches.belongsTo(TeamsModel, { foreignKey: 'away_team', as: 'teamsAway' });
 
 export default Matches;
