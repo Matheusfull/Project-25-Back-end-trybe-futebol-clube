@@ -6,20 +6,14 @@ import MatchesModel from '../models/MatchesModel';
   teamName: string;
 } */
 
-/* interface IMatches {
-  id: number,
+interface IMatch {
+  id?: number,
   homeTeam: number,
-  homeTeamGoals:number,
-  awayTeam:number,
-  awayTeamGoals:number,
+  homeTeamGoals: number,
+  awayTeam: number,
+  awayTeamGoals: number,
   inProgress: boolean,
-  teamHome: {
-    teamName: string,
-  },
-  teamAway: {
-    teamName: string,
-  },
-} */
+}
 
 export default class MatchesService {
   public model = MatchesModel;
@@ -43,5 +37,16 @@ export default class MatchesService {
       ],
     });
     return matcheinProgress;
+  }
+
+  public static async createMatch(match: IMatch) {
+    const createNewMatche = await MatchesModel.create({
+      homeTeam: match.homeTeam,
+      homeTeamGoals: match.homeTeamGoals,
+      awayTeam: match.awayTeam,
+      awayTeamGoals: match.awayTeamGoals,
+      inProgress: true,
+    });
+    return createNewMatche;
   }
 }
