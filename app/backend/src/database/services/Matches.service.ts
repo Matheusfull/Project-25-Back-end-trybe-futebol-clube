@@ -49,4 +49,18 @@ export default class MatchesService {
     });
     return createNewMatche;
   }
+
+  public static async changeProgress(id: number | string) {
+    // const { homeTeam } = await MatchesModel.findByPk(id); tentando pegar tudo do match e só mudar o inProgress
+    const updateMatchInProgress = await MatchesModel.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+    return updateMatchInProgress;
+  }
+
+  public static async getById(id: number | string) {
+    const match = await MatchesModel.findByPk(id);
+    return match;
+  }
 }
