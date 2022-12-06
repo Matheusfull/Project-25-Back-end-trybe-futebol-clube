@@ -31,8 +31,7 @@ export default class matchesController {
     const match = req.body;
     if (match.homeTeam === match.awayTeam) {
       return res.status(422).json({
-        message: `It is not possible to create 
-      a match with two equal teams` });
+        message: 'It is not possible to create a match with two equal teams' });
     }
     /* const homeTeamValidation = await TeamsService.getById(match.homeTeam);
     const awayTeamValidation = await TeamsService.getById(match.awayTeam);
@@ -42,7 +41,7 @@ export default class matchesController {
     } */
 
     const createMatch = await MatchesService.createMatch(match);
-    return res.status(200).json(createMatch);
+    return res.status(201).json(createMatch);
   };
 
   public changeMatchInProgress = async (req: Request, res: Response) => {
@@ -51,7 +50,7 @@ export default class matchesController {
     /* const match = await MatchesService.getById(id);
     if (!match) return res.status(404).json({ message: 'There is no team with such id!' }); */
 
-    await MatchesService.changeProgress(id);
+    await MatchesService.changeProgress(Number(id));
     res.status(200).json({ message: 'Finished' });
   };
 }

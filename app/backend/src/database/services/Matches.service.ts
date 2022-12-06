@@ -40,14 +40,14 @@ export default class MatchesService {
   }
 
   public static async createMatch(match: IMatch) {
-    const createNewMatche = await MatchesModel.create({
+    const createNewMatch = await MatchesModel.create({
       homeTeam: match.homeTeam,
       homeTeamGoals: match.homeTeamGoals,
       awayTeam: match.awayTeam,
       awayTeamGoals: match.awayTeamGoals,
       inProgress: true,
     });
-    return createNewMatche;
+    return createNewMatch;
   }
 
   public static async changeProgress(id: number | string) {
