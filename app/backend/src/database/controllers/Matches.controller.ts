@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 // import TokenManager from '../helpers/TokenManager';
 import MatchesService from '../services/Matches.service';
-// import TeamsService from '../services/Teams.service';
+import TeamsService from '../services/Teams.service';
 
 export default class matchesController {
-  // constructor(private matchesService = new MatchesService()) { }
+  constructor(private teamsService = new TeamsService()) { }
   public getAll = async (req: Request, res: Response) => {
     const { inProgress } = req.query;
     //  if (inProgress === 'true' || inProgress === 'false') {
@@ -39,6 +39,12 @@ export default class matchesController {
     if (!homeTeamValidation || !awayTeamValidation) {
       return res.status(404).json({ message: 'There is no team with such id!' });
     } */
+    const homeTeam = await this.teamsService.getById(match.homeTeam);
+    const awayTeam = await this.teamsService.getById(match.awayTeam);
+
+    if (!homeTeam || !awayTeam) {
+      return res.status(404).json({ message: 'There is no team with such id!' });
+    }
 
     const createMatch = await MatchesService.createMatch(match);
     return res.status(201).json(createMatch);
