@@ -34,7 +34,7 @@ export default class matchesController {
         message: `It is not possible to create 
       a match with two equal teams` });
     }
-    /*  const homeTeamValidation = await TeamsService.getById(match.homeTeam);
+    /* const homeTeamValidation = await TeamsService.getById(match.homeTeam);
     const awayTeamValidation = await TeamsService.getById(match.awayTeam);
 
     if (!homeTeamValidation || !awayTeamValidation) {

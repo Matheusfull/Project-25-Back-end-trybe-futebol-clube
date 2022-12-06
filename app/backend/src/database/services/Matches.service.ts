@@ -16,27 +16,27 @@ interface IMatch {
 }
 
 export default class MatchesService {
-  public model = MatchesModel;
+  // public model = MatchesModel;
 
   public static async getAll() {
     const response = await MatchesModel.findAll({
       include: [
-        { association: 'teamsHome', attributes: ['teamName'] },
-        { association: 'teamsAway', attributes: ['teamName'] },
+        { association: 'teamHome', attributes: ['teamName'] },
+        { association: 'teamAway', attributes: ['teamName'] },
       ],
     });
     return response;
   }
 
   public static async getAllInProgress(inProgress: boolean) {
-    const matcheinProgress = await MatchesModel.findAll({
+    const matchesInProgress = await MatchesModel.findAll({
       where: { inProgress },
       include: [
-        { association: 'teamsHome', attributes: ['teamName'] },
-        { association: 'teamsAway', attributes: ['teamName'] },
+        { association: 'teamHome', attributes: ['teamName'] },
+        { association: 'teamAway', attributes: ['teamName'] },
       ],
     });
-    return matcheinProgress;
+    return matchesInProgress;
   }
 
   public static async createMatch(match: IMatch) {
