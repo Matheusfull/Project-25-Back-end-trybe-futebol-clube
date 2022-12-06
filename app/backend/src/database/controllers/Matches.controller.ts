@@ -59,4 +59,13 @@ export default class matchesController {
     await MatchesService.changeProgress(Number(id));
     res.status(200).json({ message: 'Finished' });
   };
+
+  public updateMatchInProgress = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    const change = { homeTeamGoals, awayTeamGoals };
+
+    await MatchesService.changeMatchInProgress(id, change);
+    res.status(200).json({ message: 'Placares alterados' });
+  };
 }

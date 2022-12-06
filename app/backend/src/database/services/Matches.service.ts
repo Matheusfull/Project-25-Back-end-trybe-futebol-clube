@@ -15,6 +15,11 @@ interface IMatch {
   inProgress: boolean,
 }
 
+interface IChange {
+  homeTeamGoals: number | string,
+  awayTeamGoals: number | string,
+}
+
 export default class MatchesService {
   // public model = MatchesModel;
 
@@ -62,5 +67,14 @@ export default class MatchesService {
   public static async getById(id: number | string) {
     const match = await MatchesModel.findByPk(id);
     return match;
+  }
+
+  public static async changeMatchInProgress(id : number | string, change: IChange) {
+    const changeMatchInProgress = await MatchesModel.update(
+      { homeTeamGoals: change.homeTeamGoals,
+        awayTeamGoals: change.awayTeamGoals },
+      { where: { id } },
+    );
+    return changeMatchInProgress;
   }
 }
