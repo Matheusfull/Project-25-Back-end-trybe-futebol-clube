@@ -44,6 +44,9 @@ Matches.init({
   sequelize: db,
   modelName: 'matches',
   timestamps: false,
+  scopes: {
+    homeLeaderboard: { where: { inProgress: false },
+    } },
 });
 
 Matches.belongsTo(TeamsModel, { foreignKey: 'home_team', as: 'teamHome' });
