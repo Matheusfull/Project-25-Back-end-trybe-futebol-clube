@@ -190,19 +190,19 @@ describe('testes de Matches', () => {
     expect(response.body).to.deep.equal({ message: 'There is no team with such id!' });
   })
 
-   it('salvando uma partida com o status de inProgress com token inválido', async () => {
-     const response = await chai.request(app).post('/matches').set({ 'authorization': '.' }).send({
-       "homeTeam": 16,
-       "awayTeam": 8,
-       "homeTeamGoals": 2,
-       "awayTeamGoals": 2,
-     })
- 
-     expect(response.status).to.be.equal(401);
-     expect(response.body).to.deep.equal({ message: 'Token must be a valid token' });
-   })
+  it('salvando uma partida com o status de inProgress com token inválido', async () => {
+    const response = await chai.request(app).post('/matches').set({ 'authorization': '.' }).send({
+      "homeTeam": 16,
+      "awayTeam": 8,
+      "homeTeamGoals": 2,
+      "awayTeamGoals": 2,
+    })
 
-   it( 'é possível atualizar partidas em andamento', async () => {
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.deep.equal({ message: 'Token must be a valid token' });
+  })
+
+  it('é possível atualizar partidas em andamento', async () => {
     const response = await chai.request(app).patch('/matches/48').set({ 'authorization': token }).send({
       "homeTeamGoals": 20,
       "awayTeamGoals": 20,
@@ -212,5 +212,19 @@ describe('testes de Matches', () => {
     expect(response.body).to.deep.equal({ message: 'Placares alterados' });
   })
 
+})
+
+describe('testes de Leaderboard', () => {
+  it('Teste da rota leaderboard/home', async () => {
+    const response = await chai.request(app).get('/leaderboard/home')
+
+    expect(response.status).to.be.equal(200);
+  })
+
+  it('Teste da rota leaderboard/away', async () => {
+    const response = await chai.request(app).get('/leaderboard/away')
+
+    expect(response.status).to.be.equal(200);
+  })
 })
 
